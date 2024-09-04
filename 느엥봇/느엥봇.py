@@ -1,5 +1,5 @@
 import discord
-from discord_token import*
+from discord_token import* #여기서 discord token 불러옵니다
 from discord.ext import commands
 import random
 from 메뉴추천 import 메뉴리스트중복없음
