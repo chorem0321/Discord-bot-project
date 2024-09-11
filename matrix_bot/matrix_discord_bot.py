@@ -11,7 +11,7 @@ import asyncio
 bot = commands.Bot(command_prefix='!',intents=discord.Intents.all())
 global TorFalse
 TorFalse = 0
-운영진 = ["최준수","음현식","이유찬"]
+운영진 = ["최준수","음현식","이유찬","고혁준","이승아","장수미","박솔","신상철","신유진","윤승혁","권수민","박세진","김윤호"]
 @bot.event
 async def on_ready():
     game = discord.Game("명령어 <-- 입력으로 명령어보기")
@@ -106,9 +106,9 @@ async def on_message(message):
             await message.channel.send("몇주차인가요? 숫자로 입력해주세요!")
             try:
                 출석체크x = await bot.wait_for("message",check = check,timeout=5)
-                출석체크x = 출석체크x.content
+                출석체크x = 출석체크x.content #str 값으로 받기 위해선 .content 필수 (discord.py method)
                 global TorFalse
-                TorFalse = 1
+                TorFalse = 1 #출석체크 가능시간 열기
                 await message.channel.send(f"@everyone 매트릭스 {출석체크x}주차 출석체크가 시작되었습니다!")
             except asyncio.TimeoutError:
                 await message.channel.send("시간초과에요!")
@@ -125,7 +125,7 @@ async def on_message(message):
             wb.save(file_name)
 
     if message.content == "출석체크":
-        if TorFalse == 1:
+        if TorFalse == 1: #출석체크 시간인지 아닌지 확인
             global temp출석체크이름
             temp출석체크이름 = message.author.display_name
             출석체크이름찾기(temp출석체크이름)
@@ -134,7 +134,7 @@ async def on_message(message):
             await message.channel.send("출석체크 가능 시간이 아닙니다")
 
     if message.content == "출석체크종료" and 운영진확인(message.author.display_name):
-        TorFalse = 0
+        TorFalse = 0 #출석체크 가능시간 닫기
         await message.channel.send("@everyone 매트릭스 출석체크가 종료되었습니다!")
 
 bot.run(token)
