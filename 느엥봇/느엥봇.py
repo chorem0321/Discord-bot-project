@@ -5,13 +5,14 @@ import random
 from 메뉴추천 import 메뉴리스트중복없음
 import asyncio
 import time
+from 소설 import 소설
 
 bot = commands.Bot(command_prefix='!',intents=discord.Intents.all())
 
 global filename
 global filename2
-filename = "C:/Users/Junsu Choi/Desktop/직박구리/Discord bot project/느엥봇/노래제목리스트.txt"
-filename2 = "C:/Users/Junsu Choi/Desktop/직박구리/Discord bot project/느엥봇/노래링크리스트.txt"
+filename = "C:/Users/Junsu Choi/Desktop/jikbak/Discord bot project/느엥봇/노래제목리스트.txt"
+filename2 = "C:/Users/Junsu Choi/Desktop/jikbak/Discord bot project/느엥봇/노래링크리스트.txt"
 
 @bot.event
 async def on_ready():
@@ -55,7 +56,7 @@ async def on_message(message):
     #help
     if message.content == "명령어":
         #커맨드 손수 추가
-        command = "저메추, 주사위, 전부집합, 돌림판, 노래추천, 그럼제가선배맘에, 안아줘요, -나를 속인거니?, 뽀뽀해줘, 느엥아"
+        command = "저메추, 주사위, 전부집합, 돌림판, 노래추천, 그럼제가선배맘에, 안아줘요, -나를 속인거니?, 뽀뽀해줘, 느엥아, 글내놔"
         await message.channel.send(f"현재 등록된 명령어는 [ {command} ] 가 있어! 언제든지 쓰고싶으면 얘기해죠! :heart: \n참고로 [전부집합] 명령어는 everyone 멘션이기 때문에 사용에 각별히 주의해줘!!")
 
     #@everyone 치기
@@ -152,6 +153,15 @@ async def on_message(message):
         대답 = ["네?", "느엥이 여기있어요!", "듣고있어요!", "무슨 일이신가요?", "멍멍!"]
         대답_선택num = random.randint(0,4)
         await message.channel.send(대답[대답_선택num])
+
+    #어허 욕은 나쁜거야
+    if message.content in ['시발','ㅅㅂ','씨발','ㅆㅂ','병신','ㅂㅅ','애미']:
+        await message.channel.send(f'"{message.author.display_name}" 야!! "{message.content}" 은(는) 나쁜말이야!! 쓰지맛!!!')
+
+    #해병문학
+    if message.content == "글내놔":
+        await message.channel.send(random.choice(소설))
+
 @bot.command(name="test")
 async def react_test(ctx):
     await ctx.channel.send("테스트메세지")

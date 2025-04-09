@@ -12,6 +12,8 @@ bot = commands.Bot(command_prefix='!',intents=discord.Intents.all())
 global TorFalse
 TorFalse = 0
 운영진 = ["최준수","음현식","이유찬","고혁준","이승아","장수미","박솔","신상철","신유진","윤승혁","권수민","박세진","김윤호"]
+이름없음 = 0
+
 @bot.event
 async def on_ready():
     game = discord.Game("명령어 <-- 입력으로 명령어보기")
@@ -54,7 +56,7 @@ async def on_message(message):
     #help
     if message.content == "명령어":
         #커맨드 손수 추가
-        command = "저메추, 주사위, 전부집합, 돌림판, 그럼제가선배맘에, -나를 속인거니?, 매냥아"
+        command = "저메추, 주사위, 전부집합, 돌림판, 그럼제가선배맘에, -나를 속인거니?, 매냥아, 출석체크"
         await message.channel.send(f"현재 등록된 명령어는 [ {command} ] 가 있어! 언제든지 쓰고싶으면 얘기해죠! :heart: \n참고로 [전부집합] 명령어는 everyone 멘션이기 때문에 사용에 각별히 주의해줘!!")
 
     #@everyone 치기
@@ -84,7 +86,7 @@ async def on_message(message):
         await message.channel.send(대답[대답_선택num])
 
     #출석체크
-    file_name = "matrix_bot\m_registrations.xlsx"
+    file_name = "matrix_bot/m_registrations.xlsx"
     wb = op.load_workbook(file_name)
     ws = wb.active
     
@@ -121,7 +123,7 @@ async def on_message(message):
             출석체크이름찾기(x)
         elif ws.cell(row=출석체크y, column=1).value == temp출석체크이름:
             global 출석체크x
-            ws.cell(row=출석체크y, column=(int(출석체크x)+1)).value = "O"
+            ws.cell(row=출석체크y, column=(int(출석체크x)+1)).value = True
             wb.save(file_name)
 
     if message.content == "출석체크":
@@ -129,6 +131,7 @@ async def on_message(message):
             global temp출석체크이름
             temp출석체크이름 = message.author.display_name
             출석체크이름찾기(temp출석체크이름)
+            출석체크y = 1
             await message.channel.send(f"{message.author.display_name}님 출석체크가 완료되었습니다!")
         else:
             await message.channel.send("출석체크 가능 시간이 아닙니다")
